@@ -26,6 +26,8 @@ for (const element of elements) {
   obj[tier].push(val)
   await page.goBack();
   elements = await page.$$('tbody > tr')
-  process.stdout.write(n++ + '/' + length + '\r')
+  // print out progress for --verbose option
+  if (process.argv[2] === '--verbose')
+    process.stdout.write(n++ + '/' + length + '\r')
 }
-console.log(obj)
+console.log(JSON.stringify(obj))

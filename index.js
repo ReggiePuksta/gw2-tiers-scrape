@@ -30,7 +30,9 @@ for (const element of elements) {
   const els = await page.$('.infobox.crafting > div > dl:nth-child(2) > dd > a')
   const val = await els.evaluate(el => el.textContent)
   obj[tier].push(val);
-  process.stdout.write(n++ + '/' + length + '\r')
+  // print out progress for --verbose option
+  if (process.argv[2] === '--verbose')
+    process.stdout.write(n++ + '/' + length + '\r')
 }
 console.log(JSON.stringify(obj))
 // for (const element of elements) {
