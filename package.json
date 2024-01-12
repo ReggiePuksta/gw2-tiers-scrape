@@ -1,0 +1,15 @@
+{
+  "name": "gw2-scrape-tiers",
+  "version": "0.0.1",
+  "description": "Get Material tiers",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "scrape": "node index.json > tiers.json"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "puppeteer": "^21.7.0"
+  }
+}
