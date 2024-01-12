@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "scrape": "node index.json > tiers.json"
+    "scrape": "node index.js"
   },
   "author": "",
   "license": "MIT",
