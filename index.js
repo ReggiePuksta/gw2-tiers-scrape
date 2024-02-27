@@ -34,8 +34,8 @@ let itemsData = await page.$$eval('tbody > tr', (itemsBox) => {
 
 const itemsAmount = itemsData.length;
 let itemsDone = 1;
-const tiersByLevel = {};
-const tiersByItem = {};
+const materialsInfo = {};
+const materialsByTier = {};
 console.time();
 for (const itemData of itemsData) {
   // Visit each individual item url and get it's Id
@@ -43,7 +43,7 @@ for (const itemData of itemsData) {
   await page.waitForSelector('.infobox.crafting')
   const tier = itemData.tier;
   const type = itemData.type;
-  if (!tiersByLevel[tier]) tiersByLevel[tier] = []
+  if (!materialsByTier[tier]) materialsByTier[tier] = []
   const itemIdElement = await page.$('.infobox.crafting > div > dl:last-child > dd > a')
   const itemId = await itemIdElement.evaluate(el => el.textContent)
   // Check if item is associated with multiple ids
@@ -51,14 +51,14 @@ for (const itemData of itemsData) {
   if (multipleIds.length > 1) {
     console.log("Found a link with multiple item ids: ", multipleIds);
     multipleIds.forEach(singleId => {
-      tiersByLevel[tier].push(singleId * 1);
-      tiersByItem[singleId] = { type: type, tier: tier * 1 };
+      materialsInfo[singleId] = { type: type, tier: tier * 1 };
+      materialsByTier[tier].push(singleId * 1);
     });
   }
   else {
     // convert itemId to number
-    tiersByLevel[tier].push(itemId * 1);
-    tiersByItem[itemId] = { type: type, tier: tier * 1 };
+    materialsInfo[itemId] = { type: type, tier: tier * 1 };
+    materialsByTier[tier].push(itemId * 1);
   }
   // print out progress
   if (process.argv[2] !== '--silent')
@@ -72,6 +72,6 @@ console.timeEnd();
 console.log("Total items: ", itemsAmount);
 
 console.log('Writing to file...');
-fs.writeFileSync('./tiers_by_level.json', JSON.stringify(tiersByLevel));
-fs.writeFileSync('./tiers_by_item.json', JSON.stringify(tiersByItem));
+fs.writeFileSync('./output/materials_info.json', JSON.stringify(materialsInfo));
+fs.writeFileSync('./output/materials_by_tier.json', JSON.stringify(materialsByTier));
 console.log('Done');

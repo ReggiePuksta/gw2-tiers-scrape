@@ -1,6 +1,6 @@
 {
-  "name": "gw2-scrape-tiers",
-  "version": "0.0.2",
+  "name": "gw2-scrape-mats",
+  "version": "0.0.3",
   "description": "Get Material tiers and types",
   "main": "index.js",
   "type": "module",
